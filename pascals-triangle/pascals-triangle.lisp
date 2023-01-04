@@ -4,14 +4,10 @@
 (in-package :pascals-triangle)
 
 (defun row (n)
-  (case n
-      (1 '(1))
-      (otherwise
-        (append 
-          (loop for n in (row (1- n))
-              and n-1 = 0 then n
-              collect (+ n n-1))
-          '(1)))))
+  (if (= 1 n) '(1)
+    (loop for n in (append (row (1- n)) '(0))
+        and n-1 = 0 then n
+        collect (+ n n-1))))
 
 (defun rows (n)
   (loop for i from 1 to n collect (row i)))
