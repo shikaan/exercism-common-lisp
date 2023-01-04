@@ -6,12 +6,11 @@
 (defun row (n)
   (case n
       (1 '(1))
-      (2 '(1 1))
       (otherwise
         (append 
-          (loop for el in (row (1- n))
-              and prev-el = 0 then el
-              collect (+ el prev-el))
+          (loop for n in (row (1- n))
+              and n-1 = 0 then n
+              collect (+ n n-1))
           '(1)))))
 
 (defun rows (n)
