@@ -23,8 +23,7 @@
 
 (defun remove-multiples-of (list n)
   "Removes multiples of n from list"
-  (reverse (set-difference list (multiples-of n (last-el list))))
-)
+  (reverse (set-difference list (multiples-of n (last-el list)))))
 
 (defun primes-in-range-from (range current)
   "Returns all the primes in a range greater than current"
