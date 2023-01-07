@@ -11,7 +11,8 @@
 
 (in-package :space-age)
 
-(defvar earth-seconds 31557600)
+(defconstant earth-seconds 31557600)
+(defconstant planets (list :mercury :venus :earth :mars :jupiter :saturn :uranus :neptune))
 
 (defun factor (planet)
   (case planet
@@ -24,13 +25,8 @@
     (:uranus 84.016846)
     (:neptune 164.79132)))
 
-(defun years-on (age planet) (/ age (* earth-seconds (factor planet))))
+(defun years-on (planet) (lambda (age) (/ age (* earth-seconds (factor planet)))))
 
-(defun on-earth (age) (years-on age :earth))
-(defun on-mercury (age) (years-on age :mercury))
-(defun on-venus (age) (years-on age :venus))
-(defun on-mars (age) (years-on age :mars))
-(defun on-jupiter (age) (years-on age :jupiter))
-(defun on-saturn (age) (years-on age :saturn))
-(defun on-uranus (age) (years-on age :uranus))
-(defun on-neptune (age) (years-on age :neptune))
+(loop for planet in planets 
+  for fname = (intern (format nil "ON-~a" planet))
+  do (setf (fdefinition fname) (years-on planet)))
