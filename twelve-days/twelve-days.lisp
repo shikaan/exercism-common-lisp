@@ -19,7 +19,6 @@
   "On the twelfth day of Christmas my true love gave to me: twelve Drummers Drumming, eleven Pipers Piping, ten Lords-a-Leaping, nine Ladies Dancing, eight Maids-a-Milking, seven Swans-a-Swimming, six Geese-a-Laying, five Gold Rings, four Calling Birds, three French Hens, two Turtle Doves, and a Partridge in a Pear Tree."
 ))
 
-(defun recite (&optional (begin 1 has-begin-p) (end 12 has-end-p))
+(defun recite (&optional (begin 1 has-begin-p) (end (if has-begin-p begin 12)))
   "Returns a string of the requested verses for the 12 Days of Christmas."
-  (if (and has-begin-p (not has-end-p)) (setf end begin))
   (format nil "~{~A~^~%~}" (subseq verses (1- begin) end)))
