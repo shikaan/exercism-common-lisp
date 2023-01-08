@@ -8,7 +8,8 @@
 
 (defun random-char () (code-char (+ 65 (random 26))))
 
-(defun generate-name () (format nil "~a~a~a" (random-char) (random-char) (random 999)))
+(defun generate-name () 
+  (format nil "~a~a~a" (random-char) (random-char) (random 999)))
 
 (defun build-robot () (make-robot :name (generate-name)))
 
