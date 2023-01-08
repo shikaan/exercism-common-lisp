@@ -9,8 +9,7 @@
       (cond 
         ((>= (* (1- sq) sq) size) (list (1- sq) sq))
         ((>= (* sq sq) size) (list sq sq))
-        ((>= (* (1+ sq) sq) size) (list sq (1+ sq)))
-    ))))
+        ((>= (* (1+ sq) sq) size) (list sq (1+ sq)))))))
 
 (defun normalize (str) (map 'string #'char-downcase (remove-if-not #'alphanumericp str)))
 
