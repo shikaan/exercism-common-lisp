@@ -11,6 +11,6 @@
   (cond
     ((= n 1) acc)
     ((evenp n) (factors (/ n 2) (lpush acc 2)))
-    (t (loop for i from 3 to n
+    (t (loop for i from 3 to n by 2
       if (divisible-p n i) 
       do (return (factors (/ n i) (lpush acc i)))))))
