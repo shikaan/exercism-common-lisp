@@ -8,7 +8,7 @@
   (let ((looking-for '()))
     (loop 
       for c across value 
-      for searched = (first looking-for)
+      for searched = (first looking-for)  
       for s = (string c)
         do (cond
           ((string= s "(") (push ")" looking-for))
