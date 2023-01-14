@@ -9,18 +9,18 @@
    (< a b c)
    (= (expt c 2) (+ (expt a 2) (expt b 2)))))
 
-(defun to-be-picked-p (a b c n)
-  (and (= n (+ a b c)) (triplet-p a b c)))
+(defun triples-with-sum-in-range (left right index sum)
+  (loop while (< left right) 
+    do (cond 
+      ((and (= sum (+ index left right)) (triplet-p index left right)) 
+        (return (list index left right)))
+      ; Advance left
+      ((> sum (+ index left right)) (setf left (1+ left)))
+      ; Move back right
+      (t (setf right (1- right))))))
 
 (defun triplets-with-sum (n)
-  (let ((result nil) (l 0) (r 0))
-    (loop for i from 0 to n 
-          do (progn 
-              (setf l (1+ i))
-              (setf r (1- n))
-              (loop while (< l r) 
-                do (cond 
-                  ((to-be-picked-p i l r n) (progn (push (list i l r) result) (setf r (1- r))))
-                  ((> n (+ i l r)) (setf l (1+ l)))
-                  (t (setf r (1- r)))))))
-    (reverse result)))
+  (loop 
+      for i from 1 to n
+      for result = (triples-with-sum-in-range (1+ i) (1- n) i n)
+      when result collect result))
