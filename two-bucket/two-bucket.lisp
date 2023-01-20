@@ -8,7 +8,10 @@
   (zerop (mod goal (gcd bucket-one bucket-two))))
 
 (defun pour (from from-sym to to-sym goal)
-  (loop for move from 1
+  (cond 
+    ((= goal to-sym) (list `(:moves . 2) `(:goal-bucket . ,from-sym) `(:other-bucket . (- from to))))
+    ((= goal from-sym) (list `(:moves . 2) `(:goal-bucket . ,to-sym) `(:other-bucket . (- to from))))
+    (t (loop for move from 1
       with content-from = from
       with content-to = 0
       with quantity
@@ -20,7 +23,7 @@
         (t
           (setf quantity (min content-from (- to content-to)))
           (setf content-to (+ content-to quantity))
-          (setf content-from (- content-from quantity))))))
+          (setf content-from (- content-from quantity))))))))
 
 (defun measure (bucket-one bucket-two goal start-bucket)
   "Function to solve the two-bucket puzzle, if possible, when given the capacities
