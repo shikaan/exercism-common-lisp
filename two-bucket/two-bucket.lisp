@@ -9,9 +9,8 @@
 
 (defun pour (from from-sym to to-sym goal)
   (cond 
-    ((= goal to-sym) (list `(:moves . 2) `(:goal-bucket . ,from-sym) `(:other-bucket . (- from to))))
-    ((= goal from-sym) (list `(:moves . 2) `(:goal-bucket . ,to-sym) `(:other-bucket . (- to from))))
-    (t (loop for move from 1
+    ((= goal to) (list `(:moves . 2) `(:goal-bucket . ,to-sym) `(:other-bucket . ,from)))
+    (t (loop for move from 1 to 1000
       with content-from = from
       with content-to = 0
       with quantity
