@@ -6,29 +6,28 @@
 (in-package :palindrome-products)
 
 (defun palindrome-p (n)
-  (let ((s (format nil "~a" n)))
+  (let ((s (write-to-string n)))
     (string= s (reverse s))))
 
-(defun palindrome-between (min max)
-  (loop for i from min to max if (palindrome-p i) collect i))
+(defun divides-p (a b) (zerop (mod a b)))
 
-(defun palindrome-between-2 (min max)
-  (loop for i from max downto min if (palindrome-p i) collect i))
-
-(defun get-factors (n minimum maximum)
-  (loop with result for a from minimum to (min n maximum)
-    do (loop for b from a to (min n maximum)
-      if (= (* a b) n) do (push (list a b) result))
-    finally (return (reverse result))))
+(defun get-factors (n min-factor max-factor)
+  (loop 
+    for candidate from min-factor to (isqrt n)
+    for q = (/ n candidate)
+    if (and (divides-p n candidate) (<= min-factor q max-factor))
+      collect (list candidate q)))
 
 (defun smallest (min-factor max-factor)
   (if (< min-factor max-factor)
-    (let ((palindromes (palindrome-between (expt min-factor 2) (expt max-factor 2))))
-      (loop for i in palindromes for factors = (get-factors i min-factor max-factor) 
-        if factors do (return (values i factors))))))
+    (loop 
+      for i from (expt min-factor 2) to (expt max-factor 2)
+      if (and (palindrome-p i) (get-factors i min-factor max-factor))
+        return (values i (get-factors i min-factor max-factor)))))
 
 (defun largest (min-factor max-factor)
   (if (< min-factor max-factor)
-    (let ((palindromes (palindrome-between-2 (expt min-factor 2) (expt max-factor 2))))
-      (loop for i in palindromes for factors = (get-factors i min-factor max-factor)
-        if factors do (return (values i factors))))))
+    (loop 
+      for i from (expt max-factor 2) downto (expt min-factor 2)
+      if (and (palindrome-p i) (get-factors i min-factor max-factor))
+        return (values i (get-factors i min-factor max-factor)))))
