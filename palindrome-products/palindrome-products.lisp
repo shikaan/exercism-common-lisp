@@ -6,19 +6,8 @@
 (in-package :palindrome-products)
 
 (defun palindrome-p (n)
-  (let* ((s (format nil "~a" n)) (l (length s)))
-    (if (= 1 l) t
-      (loop for i from 0 to (ceiling (/ l 2))  
-        always (char= (char s i) (char s (- (1- l) i)))))))
-
-
-(defun couples (min-factor max-factor)
-  (loop 
-    with result
-    for a from min-factor to max-factor 
-      do (loop for b from min-factor to max-factor 
-        do (push (list a b) result))
-    finally (return (reverse result))))
+  (let ((s (format nil "~a" n)))
+    (string= s (reverse s))))
 
 (defun smallest (min-factor max-factor)
   (if (< min-factor max-factor)
