@@ -23,8 +23,7 @@
       (list accumulator l))))
 
 ; In order to optimise groups we need to replace the (5,3) couples
-; with (4,4) couples. These ocuples will include placeholders,
-; since the actual books don't matter for price calc.
+; with (4,4) couples.
 (defun opt (bins)
   (loop while (and (> (first bins) 0) (> (third bins) 0))
     do (setf bins 
