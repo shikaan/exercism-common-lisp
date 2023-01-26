@@ -1,11 +1,9 @@
 start:
   exercism download --exercise=$1 --track=common-lisp
-  cd $1
-  sbcl --load $1-test.lisp
 
 submit:
   exercism submit $1/$1.lisp
-  git add .
+  git add $1/**
   git commit -m "feat: $1"
   git push
 
